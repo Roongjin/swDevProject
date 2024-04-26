@@ -67,7 +67,6 @@ exports.addReservation = async (req, res, next) => {
   try {
     req.body.user = req.user.id;
     req.body.restaurant = req.params.restaurantId;
-
     const restaurant = await Restaurant.findById(req.params.restaurantId);
 
     if (!restaurant) {
@@ -161,7 +160,7 @@ exports.deleteReservation = async (req, res, next) => {
       });
     }
 
-    await reservation.remove();
+    await reservation.deleteOne();
 
     res.status(200).json({
       success: true,

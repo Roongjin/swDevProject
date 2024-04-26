@@ -157,7 +157,7 @@ exports.deleteFeedback = async (req, res, next) => {
       });
     }
 
-    await feedback.remove();
+    await feedback.deleteOne();
 
     res.status(200).json({
       success: true,
