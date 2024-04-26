@@ -18,7 +18,7 @@ router
 router
   .route("/:id")
   .get(getFeedback)
-  .put(protect, authorize("admin"), updateFeedback)
-  .delete(protect, authorize("admin"), deleteFeedback);
+  .put(protect, authorize("admin", "user"), updateFeedback)
+  .delete(protect, authorize("admin", "user"), deleteFeedback);
 
 module.exports = router;
