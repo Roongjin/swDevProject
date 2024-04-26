@@ -12,7 +12,7 @@ const FeedbackSchema = new mongoose.Schema({
     required: true,
   },
   rating: {
-    type: Integer,
+    type: Number,
     required: [true, "Please provide a rating"],
   },
   description: {
