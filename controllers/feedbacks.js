@@ -52,24 +52,6 @@ exports.getFeedback = async (req, res, next) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
-//@desc     Get feedbacks of a restaurant
-//@routes   GET /api/v1/restaurants/:restaurantId/feedbacks
-//@access   Private
-exports.getRestaurantFeedback = async (req, res, next) => {
-  try {
-    const feedbacks = await Feedback.find({
-      restaurant: req.params.restaurantId,
-    }).populate({ path: "user", select: "name" });
-
-    res.status(201).json({
-      success: true,
-      data: feedbacks,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: "Server Error" });
-  }
-};
 
 //@desc     Create a new feedback
 //@routes   POST /api/v1/restaurants/:restaurantId/feedbacks
