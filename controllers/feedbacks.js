@@ -92,10 +92,21 @@ exports.addFeedback = async (req, res, next) => {
       }
     }
 
-    req.body.user = req.user.id;
-    req.body.restaurant = req.params.restaurantId;
+    const { rating, description } = req.body;
 
-    const feedback = await Feedback.create(req.body);
+    if (rating && (rating < 0 || rating > 5)) {
+      return res.status(400).json({
+        success: false,
+        message: "Rating must be between 0 and 5",
+      });
+    }
+
+    const feedback = await Feedback.create({
+      user: req.user.id,
+      restaurant: req.params.restaurantId,
+      rating,
+      description,
+    });
 
     res.status(201).json({
       success: true,
