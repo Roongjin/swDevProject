@@ -7,17 +7,17 @@ const {
   deleteRestaurant,
 } = require("../controllers/restaurants");
 
-//Include other resource routers
-// const reservationRouter = require("./reservations");
-// const feedbackRouter = require("./feedbacks");
+// Include other resource routers
+const reservationRouter = require("./reservations");
+const feedbackRouter = require("./feedbacks");
 
 const router = express.Router();
 
 const { protect, authorize } = require("../middleware/auth");
 
-//Re-route into other resource routers
-// router.use("/:restaurantId/reservations/", reservationRouter);
-// router.use("/:restaurantId/feedbacks/", feedbackRouter);
+// Re-route into other resource routers
+router.use("/:restaurantId/reservations", reservationRouter);
+router.use("/:restaurantId/feedbacks", feedbackRouter);
 
 router
   .route("/")
