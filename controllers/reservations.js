@@ -61,7 +61,7 @@ exports.getReservation = async (req, res, next) => {
 };
 
 //@desc     Create a new reservation
-//@routes   POST /api/v1/reservations/:restaurantId
+//@routes   POST /api/v1/restaurants/:restaurantId/reservations
 //@access   Private
 exports.addReservation = async (req, res, next) => {
   try {

@@ -7,7 +7,7 @@ const sessions = require("express-session");
 //Route files
 const restaurants = require("./routes/restaurants");
 const auth = require("./routes/auth");
-// const reservations = require("./routes/reservations");
+const reservations = require("./routes/reservations");
 // const feedbacks = require("./routes/feedbacks");
 
 dotenv.config({ path: "./config/config.env" });
@@ -32,7 +32,7 @@ app.use(cookieParser());
 
 app.use("/api/v1/restaurants", restaurants);
 app.use("/api/v1/auth", auth);
-// app.use("/api/v1/reservations", reservations);
+app.use("/api/v1/reservations", reservations);
 // app.use("/api/v1/feedbacks", feedbacks);
 
 const PORT = process.env.PORT || 5000;

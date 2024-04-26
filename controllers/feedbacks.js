@@ -6,10 +6,12 @@ const Reservation = require("../models/Reservation");
 //@access   Private (admin and user)
 exports.getFeedbacks = async (req, res, next) => {
   try {
-    const feedbacks = await Feedback.find().populate({
-      path: "user",
-      select: "name",
-    });
+    const feedbacks = await Feedback.find()
+      .populate({
+        path: "user",
+        select: "name",
+      })
+      .populate({ path: "restaurant", select: "name address tel" });
 
     res.status(200).json({
       success: true,
@@ -27,10 +29,12 @@ exports.getFeedbacks = async (req, res, next) => {
 //@access   Private (admin and user)
 exports.getFeedback = async (req, res, next) => {
   try {
-    const feedback = await Feedback.findById(req.params.id).populate({
-      path: "user",
-      select: "name",
-    });
+    const feedback = await Feedback.findById(req.params.id)
+      .populate({
+        path: "user",
+        select: "name",
+      })
+      .populate({ path: "restaurant", select: "name address tel" });
 
     if (!feedback) {
       return res.status(404).json({
@@ -48,9 +52,27 @@ exports.getFeedback = async (req, res, next) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+//@desc     Get feedbacks of a restaurant
+//@routes   GET /api/v1/restaurants/:restaurantId/feedbacks
+//@access   Private
+exports.getRestaurantFeedback = async (req, res, next) => {
+  try {
+    const feedbacks = await Feedback.find({
+      restaurant: req.params.restaurantId,
+    }).populate({ path: "user", select: "name" });
+
+    res.status(201).json({
+      success: true,
+      data: feedbacks,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};
 
 //@desc     Create a new feedback
-//@routes   POST /api/v1/feedbacks/:restaurantId
+//@routes   POST /api/v1/restaurants/:restaurantId/feedbacks
 //@access   Private (user with reservation)
 exports.addFeedback = async (req, res, next) => {
   try {
