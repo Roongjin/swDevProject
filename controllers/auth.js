@@ -16,6 +16,9 @@ exports.register = async (req, res, next) => {
       tel,
     });
 
+    //Create session
+    req.session.useremail = email;
+
     //Create token
     sendTokenResponse(user, 200, res);
   } catch (err) {
@@ -55,6 +58,9 @@ exports.login = async (req, res, next) => {
         .status(401)
         .json({ success: false, msg: "Invalid credentials" });
     }
+
+    //Create session
+    req.session.useremail = email;
 
     //Create token
     sendTokenResponse(user, 200, res);
@@ -107,6 +113,8 @@ exports.logout = async (req, res, next) => {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
   });
+
+  req.session.destroy();
 
   res.status(200).json({
     success: true,

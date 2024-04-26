@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
+const sessions = require("express-session");
 
 //Route files
 const restaurants = require("./routes/restaurants");
@@ -14,6 +15,18 @@ dotenv.config({ path: "./config/config.env" });
 connectDB();
 
 const app = express();
+
+app.use(
+  sessions({
+    secret: process.env.SESSION_SECRET,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+    resave: true,
+    saveUninitialized: false,
+  }),
+);
+
 app.use(express.json());
 app.use(cookieParser());
 
